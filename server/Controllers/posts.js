@@ -56,30 +56,41 @@ export const getUserPosts = async(req, res) =>{
 }
 
 //UPDATE
-export const likePost = async(req, res) => {
+export const likePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+
+    console.log(req.body);
+
+    const post = await Post.findById(id);
+    const isLiked = post.likes.get(userId);
+
+    if (isLiked) {
+      post.likes.delete(userId);
+    } else {
+      post.likes.set(userId, true);
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { likes: post.likes },
+      { new: true }
+    );
+
+    res.status(200).json(updatedPost);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+//Get all users
+export const getAllUsers = async(req, res) =>{
 	try{
-		const {id} = req.params;
-		const {userId} = req.body;
+		const users = await User.find();
+		res.status(200).json({Users: users});
 
-		const post = await Post.findById(id);
-		const isLiked = post.likes.get(userId);
-
-		if(isLiked){
-			post.likes.delete(userId);
-		}
-		else{
-			post.likes.set(userId, true);
-		}
-
-		const updatePost = await Post.findByIdAndUpdate(
-			id,
-			{likes: post.likes},
-			{new: true}
-		);
-
-		res.status(200).json(updatePost);
-
-		}catch(err){
-			res.status(404).json({message: err.message})
+	}catch(err){
+		res.status(404).json({message: err.message})
 	}
 }

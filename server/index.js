@@ -16,6 +16,7 @@ import {register} from "./Controllers/auth.js";
 import {createPost} from "./Controllers/posts.js";
 
 
+
 // CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
