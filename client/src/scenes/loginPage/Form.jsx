@@ -242,12 +242,12 @@ const Form = () => {
                 p: "1rem",
                 backgroundColor: palette.primary.main,
                 color: palette.background.alt,
-                "&:hover": { color: palette.primary.main },
+                "&:hover": { backgroundColor: palette.neutral.mediumMain },
               }}
             >
               {isLogin ? "LOGIN" : "REGISTER"}
             </Button>
-            <Typography
+            <Typography className="text-center"
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
                 resetForm();
@@ -257,7 +257,7 @@ const Form = () => {
                 color: palette.primary.main,
                 "&:hover": {
                   cursor: "pointer",
-                  color: palette.primary.light,
+                  color: palette.neutral.mediumMain,
                 },
               }}
             >
